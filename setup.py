@@ -44,8 +44,9 @@ setup(
     entry_points={
         "wai.annotations.plugins": [
             # ISPs
-            "redis-predict-ic=wai.annotations.redis_predictions.isp.ic.specifier:PredictISPSpecifier",
-            "redis-predict-od=wai.annotations.redis_predictions.isp.od.specifier:PredictISPSpecifier",
+            "redis-predict-ic=wai.annotations.redis_predictions.isp.image_classification.specifier:PredictISPSpecifier",
+            "redis-predict-is=wai.annotations.redis_predictions.isp.image_segmentation.specifier:PredictISPSpecifier",
+            "redis-predict-od=wai.annotations.redis_predictions.isp.object_detection.specifier:PredictISPSpecifier",
         ]
     }
 )
