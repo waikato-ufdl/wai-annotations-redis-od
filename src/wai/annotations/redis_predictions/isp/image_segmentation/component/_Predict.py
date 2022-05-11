@@ -3,6 +3,7 @@ import numpy as np
 from wai.annotations.core.component import ProcessorComponent
 from wai.annotations.core.stream import ThenFunction, DoneFunction
 from wai.annotations.domain.image.segmentation import ImageSegmentationInstance, ImageSegmentationAnnotation
+from wai.annotations.domain.image.segmentation.util import UnlabelledInputMixin
 from wai.annotations.redis_predictions.isp.base.component import BasePredict
 from wai.common.cli.options import TypedOption
 
@@ -16,6 +17,7 @@ FORMATS = [
 
 class Predict(
     BasePredict,
+    UnlabelledInputMixin,
     ProcessorComponent[ImageSegmentationInstance, ImageSegmentationInstance]
 ):
     """
@@ -40,7 +42,7 @@ class Predict(
         :return:
         """
 
-        annotations = ImageSegmentationAnnotation(labels=element.annotations.labels, size=element.annotations.size)
+        annotations = ImageSegmentationAnnotation(labels=self.labels, size=element.annotations.size)
 
         # convert received image to indices
         if self.image_format == FORMAT_INDEXEDPNG:
