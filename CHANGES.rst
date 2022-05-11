@@ -4,4 +4,4 @@ Changelog
 1.0.0 (????-??-??)
 ------------------
 
-- Initial release:
+- Initial release: redis-predict-(ic/is/od)

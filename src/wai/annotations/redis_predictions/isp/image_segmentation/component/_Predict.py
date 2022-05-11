@@ -1,4 +1,7 @@
+import io
 import numpy as np
+
+from PIL import Image
 
 from wai.annotations.core.component import ProcessorComponent
 from wai.annotations.core.stream import ThenFunction, DoneFunction
@@ -31,6 +34,24 @@ class Predict(
         help="the format of the image that comes back as prediction: %s" % ",".join(FORMATS)
     )
 
+    def _fix_size(self, img, width, height):
+        """
+        Fixes the size of the received image, if necessary.
+
+        :param img: the to resize
+        :type img: Image
+        :param width: the required width
+        :type width: int
+        :param height: the required height
+        :type height: int
+        :return: the (potentially) resized image
+        :rtype: Image
+        """
+        if (img.width == width) and (img.height == height):
+            return img
+        else:
+            return img.resize(width, height, Image.BILINEAR)
+
     def _process_predictions(self, element, data, then: ThenFunction[ImageSegmentationInstance], done: DoneFunction):
         """
         Processes the prediction data.
@@ -44,13 +65,18 @@ class Predict(
 
         annotations = ImageSegmentationAnnotation(labels=self.labels, size=element.annotations.size)
 
+        w = element.data.width
+        h = element.data.height
+
         # convert received image to indices
         if self.image_format == FORMAT_INDEXEDPNG:
-            new_indices = np.fromstring(data, dtype=np.uint8).astype(np.uint16)
+            image = self._fix_size(Image.open(io.BytesIO(data)), w, h)
+            new_indices = np.asarray(image).astype(np.uint16)
             new_indices.resize(element.annotations.indices.shape)
             annotations.indices = new_indices
         elif self.image_format == FORMAT_BLUECHANNEL:
-            new_indices = np.fromstring(data, dtype=np.uint8)
+            image = self._fix_size(Image.open(io.BytesIO(data)), w, h)
+            new_indices = np.asarray(image).astype(np.uint16)
             new_indices.resize((*element.annotations.indices.shape, 3))
             new_indices = new_indices[:, :, 2]
             new_indices = new_indices.astype(np.uint16)

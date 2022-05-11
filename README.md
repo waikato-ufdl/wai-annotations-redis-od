@@ -35,6 +35,37 @@ optional arguments:
 ```
 
 
+### REDIS-PREDICT-IS
+Makes image segmentation predictions via Redis backend, passing in an image and receiving an image with predicted segmentations.
+
+#### Domain(s):
+- **Image Segmentation Domain**
+
+#### Options:
+```
+usage: redis-predict-is [--channel-in CHANNEL_IN] [--channel-out CHANNEL_OUT] [--image-format IMAGE_FORMAT] --labels LABEL [LABEL ...] [-d REDIS_DB] [-h REDIS_HOST] [-p REDIS_PORT] [-t TIMEOUT] [-v]
+
+optional arguments:
+  --channel-in CHANNEL_IN
+                        the Redis channel on which to receive predictions.
+  --channel-out CHANNEL_OUT
+                        the Redis channel to send the images out
+  --image-format IMAGE_FORMAT
+                        the format of the image that comes back as prediction: indexedpng,bluechannel
+  --labels LABEL [LABEL ...]
+                        specifies the labels for each index
+  -d REDIS_DB, --redis-db REDIS_DB
+                        the database to use
+  -h REDIS_HOST, --redis-host REDIS_HOST
+                        the Redis server to connect to
+  -p REDIS_PORT, --redis-port REDIS_PORT
+                        the port the Redis server is running on
+  -t TIMEOUT, --timeout TIMEOUT
+                        the timeout in seconds to wait for a prediction to arrive
+  -v, --verbose         whether to output debugging information.
+```
+
+
 ### REDIS-PREDICT-OD
 Makes object detection predictions via Redis backend, passing in an image and receiving OPEX predictions back:
 https://github.com/WaikatoLink2020/objdet-predictions-exchange-format
