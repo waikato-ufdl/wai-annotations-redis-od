@@ -45,7 +45,7 @@ class Predict(
         # convert received image to indices
         if self.image_format == FORMAT_INDEXEDPNG:
             new_indices = np.fromstring(data, dtype=np.uint8).astype(np.uint16)
-            new_indices.resize(element.annotation.indices.shape)
+            new_indices.resize(element.annotations.indices.shape)
             annotations.indices = new_indices
         elif self.image_format == FORMAT_BLUECHANNEL:
             new_indices = np.fromstring(data, dtype=np.uint8)
