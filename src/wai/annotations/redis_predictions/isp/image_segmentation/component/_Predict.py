@@ -23,7 +23,7 @@ class Predict(
     """
 
     image_format: str = TypedOption(
-        "--image_format",
+        "--image-format",
         type=str,
         default=FORMAT_INDEXEDPNG,
         help="the format of the image that comes back as prediction: %s" % ",".join(FORMATS)
