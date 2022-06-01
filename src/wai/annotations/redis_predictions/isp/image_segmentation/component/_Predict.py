@@ -12,9 +12,11 @@ from wai.common.cli.options import TypedOption
 
 FORMAT_INDEXEDPNG = "indexedpng"
 FORMAT_BLUECHANNEL = "bluechannel"
+FORMAT_GRAYSCALE = "grayscale"
 FORMATS = [
     FORMAT_INDEXEDPNG,
     FORMAT_BLUECHANNEL,
+    FORMAT_GRAYSCALE,
 ]
 
 
@@ -80,6 +82,10 @@ class Predict(
             new_indices.resize((*element.annotations.indices.shape, 3))
             new_indices = new_indices[:, :, 2]
             new_indices = new_indices.astype(np.uint16)
+            annotations.indices = new_indices
+        elif self.image_format == FORMAT_GRAYSCALE:
+            image = self._fix_size(Image.open(io.BytesIO(data)), w, h)
+            new_indices = np.asarray(image).astype(np.uint16)
             annotations.indices = new_indices
         else:
             raise Exception("Unsupported image format: %s" % self.image_format)

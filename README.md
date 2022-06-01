@@ -43,26 +43,29 @@ Makes image segmentation predictions via Redis backend, passing in an image and 
 
 #### Options:
 ```
-usage: redis-predict-is [--channel-in CHANNEL_IN] [--channel-out CHANNEL_OUT] [--image-format IMAGE_FORMAT] --labels LABEL [LABEL ...] [-d REDIS_DB] [-h REDIS_HOST] [-p REDIS_PORT] [-t TIMEOUT] [-v]
+usage: redis-predict-is [--channel-in CHANNEL_IN] [--channel-out CHANNEL_OUT]
+                        [--image-format IMAGE_FORMAT] --labels LABEL [LABEL ...] [-d REDIS_DB]
+                        [-h REDIS_HOST] [-p REDIS_PORT] [-t TIMEOUT] [-v]
 
 optional arguments:
   --channel-in CHANNEL_IN
-                        the Redis channel on which to receive predictions.
+                        the Redis channel on which to receive predictions. (default: predictions)
   --channel-out CHANNEL_OUT
-                        the Redis channel to send the images out
+                        the Redis channel to send the images out (default: images)
   --image-format IMAGE_FORMAT
-                        the format of the image that comes back as prediction: indexedpng,bluechannel
+                        the format of the image that comes back as prediction:
+                        indexedpng,bluechannel,grayscale (default: indexedpng)
   --labels LABEL [LABEL ...]
-                        specifies the labels for each index
+                        specifies the labels for each index (default: None)
   -d REDIS_DB, --redis-db REDIS_DB
-                        the database to use
+                        the database to use (default: 0)
   -h REDIS_HOST, --redis-host REDIS_HOST
-                        the Redis server to connect to
+                        the Redis server to connect to (default: localhost)
   -p REDIS_PORT, --redis-port REDIS_PORT
-                        the port the Redis server is running on
+                        the port the Redis server is running on (default: 6379)
   -t TIMEOUT, --timeout TIMEOUT
-                        the timeout in seconds to wait for a prediction to arrive
-  -v, --verbose         whether to output debugging information.
+                        the timeout in seconds to wait for a prediction to arrive (default: 5.0)
+  -v, --verbose         whether to output debugging information. (default: False)
 ```
 
 
