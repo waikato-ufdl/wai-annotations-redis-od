@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.2 (????-??-??)
+1.0.2 (2022-06-13)
 ------------------
 
 - `redis-predict-is` now supports `grayscale` predictions as well
